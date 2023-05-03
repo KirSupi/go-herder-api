@@ -17,8 +17,8 @@ type ApiConfig struct {
 	Host string `json:"host"`
 }
 
-func LoadFromJson() (c Config, err error) {
-	file, err := os.Open("./config.json")
+func LoadFromJson(path string) (c Config, err error) {
+	file, err := os.Open(path)
 	if err != nil {
 		return
 	}

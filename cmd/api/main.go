@@ -14,8 +14,8 @@ func main() {
 	var err = errors.New("config was not been loaded")
 	if os.Getenv("LOAD_CONFIG_FROM_ENV") != "" {
 		c, err = config.LoadFromEnv()
-	} else {
-		c, err = config.LoadFromJson()
+	} else if configPath := os.Getenv("LOAD_CONFIG_FROM_JSON"); configPath != "" {
+		c, err = config.LoadFromJson(configPath)
 	}
 	if err != nil {
 		log.Fatalln(err.Error())
