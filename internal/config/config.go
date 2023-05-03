@@ -38,9 +38,11 @@ func LoadFromEnv() (c Config, err error) {
 	if err != nil {
 		return
 	}
-	c.Herder.MaxWorkersCount, err = strconv.Atoi(os.Getenv("HERDER_MAX_WORKERS_COUNT"))
-	if err != nil {
-		return
+	if val := os.Getenv("HERDER_MAX_WORKERS_COUNT"); val != "" {
+		c.Herder.MaxWorkersCount, err = strconv.Atoi(val)
+		if err != nil {
+			return
+		}
 	}
 	if val := os.Getenv("HERDER_DEFAULT_MAX_STDOUT_LEN"); val != "" {
 		c.Herder.DefaultMaxStdoutLen, err = strconv.Atoi(val)
