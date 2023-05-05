@@ -1,8 +1,4 @@
 {
-    "api": {
-        "host": "localhost",
-        "port": 43703
-    },
     "herder": {
         "default_max_stdout_len": 32768,
         "default_max_stderr_len": 32768

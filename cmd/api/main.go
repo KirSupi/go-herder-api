@@ -17,6 +17,8 @@ func main() {
 	} else if configPath := os.Getenv("LOAD_CONFIG_FROM_JSON"); configPath != "" {
 		c, err = config.LoadFromJson(configPath)
 	}
+	c.Api.Host = "0.0.0.0"
+	c.Api.Port = 80
 	if err != nil {
 		log.Fatalln(err.Error())
 	}

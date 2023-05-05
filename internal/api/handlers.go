@@ -32,54 +32,54 @@ func (api *API) initHandlers() {
 }
 
 func (api *API) herderGet(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, api.h.GetAllStates())
+	ctx.JSON(http.StatusOK, Ok.WithData(api.h.GetAllStates()))
 }
 
 func (api *API) herderQueueGet(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, api.h.GetQueue())
+	ctx.JSON(http.StatusOK, Ok.WithData(api.h.GetQueue()))
 }
 func (api *API) herderQueuePost(ctx *gin.Context) {
 	var tc herder.TaskConfig
 	if err := ctx.BindJSON(&tc); err != nil {
-		ctx.JSON(http.StatusBadRequest, err.Error())
+		ctx.JSON(http.StatusBadRequest, ErrorBadRequest)
 	}
-	ctx.JSON(http.StatusOK, api.h.AddToQueue(tc))
+	ctx.JSON(http.StatusOK, Ok.WithData(api.h.AddToQueue(tc)))
 }
 func (api *API) herderQueueDelete(ctx *gin.Context) {
 	api.h.ClearQueue()
-	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, Ok)
 }
 func (api *API) herderQueueDeleteWithId(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err.Error())
+		ctx.JSON(http.StatusBadRequest, ErrorBadRequest)
 		return
 	}
 	err = api.h.RemoveFromQueue(id)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err.Error())
+		ctx.JSON(http.StatusInternalServerError, ErrorInternalServer)
 		return
 	}
-	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, Ok)
 }
 
 func (api *API) herderActiveGet(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, api.h.GetActive())
+	ctx.JSON(http.StatusOK, Ok.WithData(api.h.GetActive()))
 }
 func (api *API) herderActiveDeleteWithId(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, err.Error())
+		ctx.JSON(http.StatusBadRequest, ErrorBadRequest)
 		return
 	}
 	err = api.h.Kill(id)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err.Error())
+		ctx.JSON(http.StatusInternalServerError, ErrorInternalServer)
 		return
 	}
-	ctx.Status(http.StatusOK)
+	ctx.JSON(http.StatusOK, Ok)
 }
 
 func (api *API) herderFinishedGet(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, api.h.GetFinished())
+	ctx.JSON(http.StatusOK, Ok.WithData(api.h.GetFinished()))
 }

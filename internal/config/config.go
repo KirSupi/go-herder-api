@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	Api    ApiConfig     `json:"api"`
+	Api    ApiConfig
 	Herder herder.Config `json:"herder"`
 }
 type ApiConfig struct {
@@ -33,8 +33,6 @@ func LoadFromJson(path string) (c Config, err error) {
 	return
 }
 func LoadFromEnv() (c Config, err error) {
-	c.Api.Host = os.Getenv("API_HOST")
-	c.Api.Port, err = strconv.Atoi(os.Getenv("API_PORT"))
 	if err != nil {
 		return
 	}
